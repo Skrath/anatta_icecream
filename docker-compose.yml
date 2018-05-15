@@ -1,0 +1,18 @@
+version: '3'
+services:
+  php-apache:
+    build: docker/php/.
+    ports:
+     - "8080:80"
+    volumes:
+      - ./web:/var/www/html/
+    links:
+      - "db:database"
+  db:
+    image: mysql:5
+    restart: always
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: test123
+      MYSQL_DATABASE: icecream
